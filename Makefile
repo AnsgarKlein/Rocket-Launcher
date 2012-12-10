@@ -31,6 +31,7 @@ install: all $(MISCDIR)$(ICON)
 uninstall:
 	rm /usr/bin/$(BINARY)
 	rm $(ICONDIR)$(ICON)
+	rm $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	@echo sucessfully uninstalled
 
 clean:
