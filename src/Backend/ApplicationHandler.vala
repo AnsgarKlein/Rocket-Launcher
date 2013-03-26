@@ -16,13 +16,13 @@
 
 class ApplicationHandler {
 	
-	private const string[] directories = { "/usr/share/applications" };
+	private string[] directories = {"/usr/share/applications", GLib.Environment.get_home_dir()+"/.local/share/applications"};
 	
 	private List<App> apps;
 	private List<int> current_apps;
 	
 	public ApplicationHandler() {
-		//Scan Applications
+		//Scan applications
 		apps = new List<App>();
 		scan_applications();
 		
@@ -56,7 +56,7 @@ class ApplicationHandler {
 				}
 			}
 			catch (Error e) {
-				stderr.printf("Error occured while scanning directories\n");
+				stderr.printf("\nError occured while scanning directories\n");
 				stderr.printf("Error: \""+e.message+"\"\n");
 				stdout.printf("Directory: "+d+"\n");
 			}
