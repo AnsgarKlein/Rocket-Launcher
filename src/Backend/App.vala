@@ -84,7 +84,7 @@ class App {
 			// --- <Type>
 			if (!kf.has_key("Desktop Entry", "Type") || kf.get_value("Desktop Entry", "Type") != "Application") {
 				stderr.printf("\nKeyValue File is not a valid .desktop file\n");
-				stderr.printf("KeyValue 'Name' does not exist XOR is not 'Application'\n");
+				stderr.printf("KeyValue 'Name' does not exist or does not equal 'Application'\n");
 				stderr.printf("Path: %s\n", path);
 				stderr.printf("ignoring file ...\n");
 				valid = false;
@@ -160,8 +160,6 @@ class App {
 			return;
 		}
 		
-		
-		
 	}
 	
 	public bool is_vaild() {
@@ -196,7 +194,8 @@ class App {
 			try {
 				GLib.Shell.parse_argv(exec_string, out argvp);
 			} catch (GLib.ShellError e) {
-				argvp = {"exec_string"};
+				stderr.printf("Could not parse execution string for '%s'\n", app_name);
+				argvp = {null};
 			}
 			
 			GLib.Process.spawn_async_with_pipes(app_path,
