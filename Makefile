@@ -3,7 +3,7 @@ PACKAGES	=	--pkg glib-2.0 --pkg gio-2.0 --pkg gtk+-3.0 --pkg appindicator3-0.1
 CC		=	valac
 CFLAGS		=	--debug --thread $(PACKAGES) --target-glib=2.32
 SOURCES		+=	src/*.vala
-SOURCES		+=	src/Backend/*.vala
+SOURCES		+=	src/AppHandling/*.vala
 SOURCES		+=	src/Gui/*.vala
 SOURCES		+=	src/AppIndicator/*.vala
 
