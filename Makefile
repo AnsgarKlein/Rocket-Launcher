@@ -7,7 +7,7 @@ SOURCES		+=	src/Backend/*.vala
 SOURCES		+=	src/Gui/*.vala
 SOURCES		+=	src/AppIndicator/*.vala
 
-BINARYDIR	=	binary/
+BINARYDIR	=	build/
 BINARY		=	panzerfaust-launcher
 
 MISCDIR		=	res/
