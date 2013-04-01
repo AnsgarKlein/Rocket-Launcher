@@ -202,7 +202,6 @@ class App {
 									argvp,
 									GLib.Environ.get(),
 									SpawnFlags.SEARCH_PATH |
-									SpawnFlags.DO_NOT_REAP_CHILD | 
 									SpawnFlags.STDOUT_TO_DEV_NULL |
 									SpawnFlags.STDERR_TO_DEV_NULL,
 									null,
