@@ -62,8 +62,8 @@ class MainWindow : Gtk.Window {
 		
 		//Setup Gui
 		build_gui();
-		this.destroy.connect(Gtk.main_quit);
-		this.show_all();
+		this.delete_event.connect(hide_on_delete);
+		//this.destroy.connect(Gtk.main_quit);	//FIXME: not sure when this is emitted
 		
 		//Setup Signals
 		application_handler.selection_changed.connect( () => {
@@ -177,5 +177,13 @@ class MainWindow : Gtk.Window {
 			application_handler.filter_apps(Filter_by.CATEGORIES, "Utility");
 			search_entry.set_text("");
 			return true; } );
+	}
+
+	public void show_Window() {
+		this.show_all();
+	}
+	
+	public void hide_Window() {
+		this.hide();
 	}
 }

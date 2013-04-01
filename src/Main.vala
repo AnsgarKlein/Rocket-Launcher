@@ -15,22 +15,55 @@
 
 
 static void main(string[] args) {
-	
 	//Can only run with (multi) thread support
 	if (!Thread.supported()) {
 		stderr.printf("Cannot run withouth thread support. Exiting ...\n");
 		return;
 	}
 	
+	//Only start when argument is --maximized or --minimized
+	if (args[1] != "--minimized" && args[1] != "--maximized") {
+		stdout.printf("Start the daemon with either\n");
+		stdout.printf("\t--maximized or\n");
+		stdout.printf("\t--minimized\n");
+		stdout.printf("\nBut it's better to just let the launcher handle the daemon\n");
+		return;
+	}
+	
 	
 	//Start
 	stdout.printf("\n");
-	
 	Gtk.init(ref args);
-	new MyAppIndicator();			//debug
-	new MainWindow();
-	Gtk.main();
 	
+	
+	//Create AppIndicator
+	new MyAppIndicator();			//debug
+	
+	//Create Window
+	MainWindow mainWindow = new MainWindow();
+	if (args[1] == "--maximized") {
+		mainWindow.show_all();
+	}
+	
+	//Start D-Bus server
+	GLib.Bus.own_name(GLib.BusType.SESSION,
+				"org.launcher.panzerfaust",
+				BusNameOwnerFlags.NONE,
+				(dbusconnection, name) => {
+					try {
+						dbusconnection.register_object("/org/launcher/panzerfaust", new DBusServer(mainWindow));
+					} catch (IOError e) {
+						stderr.printf("Could not register service\n");
+					}
+				},
+				() => {},
+				() => {
+					stderr.printf("Could not aquire dbus name\n");
+					return;
+				});
+	
+	
+	Gtk.main();
 	stdout.printf("\n");
 	
 }
