@@ -70,10 +70,8 @@ static void main(string[] args) {
 		return;
 	}
 	
+	
 	//if the D-Bus server is already running, we notify it to show its window
-	GLib.MainLoop loop = new GLib.MainLoop();
-	
-	
 	DBus_Server dbus_server = null;
 	try {
 		dbus_server = GLib.Bus.get_proxy_sync(BusType.SESSION,
@@ -83,22 +81,15 @@ static void main(string[] args) {
 									null);
 		
 		
-		//Connecting to signal pong!
-		dbus_server.error_response.connect( (return_msg) => {
-			stdout.printf("Daemon Response: \"%s\"\n", return_msg);
-			loop.quit();
-		});
-		
-		
 		//Send request
 		if (dbus_server.send(dbus_request.show)) {
 			//
 		} else {
-			stdout.printf("Error!\n");
+			stdout.printf("Error while telling application to show its window\n");
 		};
 		
 	} catch (IOError e) {
-		stderr.printf("Error - Message: %s\n", e.message);
+		stderr.printf("Error while connecting to dbus\n");
+		stderr.printf("Message: %s\n", e.message);
 	}
-	loop.run();
 }

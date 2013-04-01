@@ -35,15 +35,15 @@ static void main(string[] args) {
 	stdout.printf("\n");
 	Gtk.init(ref args);
 	
-	
-	//Create AppIndicator
-	new MyAppIndicator();			//debug
-	
+		
 	//Create Window
 	MainWindow mainWindow = new MainWindow();
 	if (args[1] == "--maximized") {
 		mainWindow.show_all();
 	}
+	
+	//Create AppIndicator
+	new MyAppIndicator(mainWindow);
 	
 	//Start D-Bus server
 	GLib.Bus.own_name(GLib.BusType.SESSION,
@@ -65,5 +65,4 @@ static void main(string[] args) {
 	
 	Gtk.main();
 	stdout.printf("\n");
-	
 }

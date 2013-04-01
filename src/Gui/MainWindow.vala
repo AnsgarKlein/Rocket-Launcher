@@ -178,12 +178,24 @@ class MainWindow : Gtk.Window {
 			search_entry.set_text("");
 			return true; } );
 	}
+	
+	//The following methods will be called from outside this class
+	//(dbus, application indicator)
 
 	public void show_Window() {
+		//Show the application window
 		this.show_all();
 	}
 	
 	public void hide_Window() {
+		//Hide the application window
 		this.hide();
+	}
+	
+	public void exit_program() {
+		//Kill the Gtk loop which is the main loop of the
+		//application at the same time
+		//( ==> we quit the application )
+		Gtk.main_quit();
 	}
 }

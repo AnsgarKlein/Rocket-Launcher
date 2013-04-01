@@ -22,30 +22,38 @@ class DBusServer {
 	}
 	
 	public bool send(dbus_request request) {
-		stdout.printf("Incoming D-Bus request: ");
+		//The compiler complains about this function never getting
+		//called, but obviously we can ignore that because the function
+		//will be called through D-Bus.
+		
+		
+		//when true: print line on incoming dbus request
+		bool debug = false;
+		
+		
+		if (debug) stdout.printf("Incoming D-Bus request:\t");
 		
 		switch (request) {
 		case dbus_request.show:
-			stdout.printf("show-window\n");
+			if (debug) stdout.printf("show-window\n");
+			
 			mainWindow.show_Window();
 			break;
 		case dbus_request.hide:
-			stdout.printf("hide-window\n");
+			if (debug) stdout.printf("hide-window\n");
+			
 			mainWindow.hide_Window();
 			break;
 		}
 		
-		bool error = false;
+		/**bool error = false;
 		if (error) {
-			error_response("Unknown Error!");
 			return false;
-		}
+		}**/
 		
-		error_response("");
 		return true;
 	}
 	
-	public signal void error_response(string return_msg);
 }
 
 enum dbus_request {

@@ -17,7 +17,6 @@
 [DBus (name = "org.launcher.panzerfaust")]
 interface DBus_Server : Object {
 	public abstract bool send(dbus_request request) throws IOError;
-	public signal void error_response(string return_msg);
 }
 
 enum dbus_request {
