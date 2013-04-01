@@ -21,8 +21,8 @@ DAEMON_PACKAGES	+=	--pkg appindicator3-0.1
 DAEMON_CFLAGS	=	--debug
 DAEMON_CFLAGS	+=	--thread
 DAEMON_CFLAGS	+=	$(DAEMON_PACKAGES)
-DAEMON_CFLAGS	+=	--target-glib=2.32
 DAEMON_CFLAGS	+=	-X -w
+#DAEMON_CFLAGS	+=	-X -O3
 
 DAEMON_SOURCES	+=	src/*.vala
 DAEMON_SOURCES	+=	src/AppHandling/*.vala
@@ -43,6 +43,7 @@ EXEC_CFLAGS	=	--debug
 EXEC_CFLAGS	=	--thread
 EXEC_CFLAGS	=	$(EXEC_PACKAGES)
 EXEC_CFLAGS	+=	-X -w
+#EXEC_CFLAGS	+=	-X -O3
 
 EXEC_SOURCES	=	src/D-Bus-Client/*.vala
 
