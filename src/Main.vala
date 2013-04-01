@@ -14,11 +14,11 @@
 **/
 
 
-static void main(string[] args) {
+static int main(string[] args) {
 	//Can only run with (multi) thread support
 	if (!Thread.supported()) {
 		stderr.printf("Cannot run withouth thread support. Exiting ...\n");
-		return;
+		return 1;
 	}
 	
 	//Only start when argument is --maximized or --minimized
@@ -27,7 +27,7 @@ static void main(string[] args) {
 		stdout.printf("\t--maximized or\n");
 		stdout.printf("\t--minimized\n");
 		stdout.printf("\nBut it's better to just let the launcher handle the daemon\n");
-		return;
+		return 1;
 	}
 	
 	
@@ -59,10 +59,10 @@ static void main(string[] args) {
 				() => {},
 				() => {
 					stderr.printf("Could not aquire dbus name\n");
-					return;
 				});
 	
 	
 	Gtk.main();
 	stdout.printf("\n");
+	return 0;
 }
