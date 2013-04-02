@@ -14,8 +14,16 @@
 **/
 
 
-static void main(string[] args) {
-	//Check if D-Bus server is running
+static int main(string[] args) {
+	//Print help
+	if (args[1] == "--help" || args[1] == "-h") {
+		stdout.printf("  -h, --help\t\tPrint this help and exit\n");
+		stdout.printf("  -m, --minimized\tStart the application minimized (to notification area)\n");
+		return 0;
+	}
+	
+	
+	//Check if D-Bus daemon is running
 	bool service_exists = false;
 	GLib.MainLoop temp_loop = new GLib.MainLoop();
 	
@@ -35,13 +43,18 @@ static void main(string[] args) {
 	temp_loop.run();
 	
 	
-	//if the D-Bus server is not yet running, we start it
+	//if the D-Bus daemon is not yet running, we start it
 	if (!service_exists) {
 		stdout.printf("D-Bus server is not running yet\n");
 		stdout.printf("trying to start it ....\n");
 		
 		try {
-			string[] argv = {"panzerfaust-launcher-daemon", "--maximized"};
+			string[] argv = {"panzerfaust-launcher-daemon", ""};
+			if (args[1] == "--minimized" || args[1] == "-m") {
+				argv[1] = "--minimized";
+			} else {
+				argv[1] = "--maximized";
+			}
 			string[] envv = Environ.get();
 			int child_pid;
 			int child_stdin_fd;
@@ -62,12 +75,12 @@ static void main(string[] args) {
 		} catch (SpawnError e) {
 			stdout.printf("no success, sorry :(");
 			stdout.printf("Error Message: %s\n", e.message);
-			return;
+			return 1;
 		}
 		stdout.printf("success\n");
 		
 		
-		return;
+		return 0;
 	}
 	
 	
@@ -83,13 +96,15 @@ static void main(string[] args) {
 		
 		//Send request
 		if (dbus_server.send(dbus_request.show)) {
-			//
+			return 0;
 		} else {
 			stdout.printf("Error while telling application to show its window\n");
+			return 1;
 		};
 		
 	} catch (IOError e) {
 		stderr.printf("Error while connecting to dbus\n");
 		stderr.printf("Message: %s\n", e.message);
+		return 1;
 	}
 }
