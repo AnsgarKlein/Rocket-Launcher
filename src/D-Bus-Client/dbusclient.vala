@@ -84,7 +84,8 @@ static int main(string[] args) {
 	}
 	
 	
-	//if the D-Bus server is already running, we notify it to show its window
+	//if the D-Bus server is already running, we notify it to toggle
+	//its window visibility (hide/show)
 	DBus_Server dbus_server = null;
 	try {
 		dbus_server = GLib.Bus.get_proxy_sync(BusType.SESSION,
@@ -95,10 +96,10 @@ static int main(string[] args) {
 		
 		
 		//Send request
-		if (dbus_server.send(dbus_request.show)) {
+		if (dbus_server.send(dbus_request.toggle)) {
 			return 0;
 		} else {
-			stdout.printf("Error while telling application to show its window\n");
+			stdout.printf("Error while telling application to toggle its window visibility\n");
 			return 1;
 		};
 		

@@ -44,6 +44,11 @@ class DBusServer {
 			
 			mainWindow.hide_Window();
 			break;
+		case dbus_request.toggle:
+			if (debug) stdout.printf("toggle-window-visibility\n");
+			
+			mainWindow.toggle_visibiliy();
+			break;
 		}
 		
 		/**bool error = false;
@@ -58,5 +63,6 @@ class DBusServer {
 
 enum dbus_request {
 	show,
-	hide
+	hide,
+	toggle
 }

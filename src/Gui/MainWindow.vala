@@ -18,6 +18,8 @@ using Gtk;
 
 class MainWindow : Gtk.Window {
 	private AppGrid app_grid;
+	private Gtk.Entry search_entry;
+	
 	private List<AppIcon> app_icon_list;
 	private ApplicationHandler application_handler;
 	
@@ -62,7 +64,10 @@ class MainWindow : Gtk.Window {
 		
 		//Setup Gui
 		build_gui();
-		this.delete_event.connect(hide_on_delete);
+		this.delete_event.connect( () => {
+				hide_Window();
+				return true;
+			} );
 		//this.destroy.connect(Gtk.main_quit);	//FIXME: not sure when this is emitted
 		
 		//Setup Signals
@@ -85,7 +90,6 @@ class MainWindow : Gtk.Window {
 		Gtk.Grid outer_grid = new Gtk.Grid();
 		outer_grid.set_column_homogeneous(false);
 		outer_grid.set_row_homogeneous(false);
-		this.add(outer_grid);
 		
 		//Scrolled Area
 		Gtk.ScrolledWindow scrolled = new Gtk.ScrolledWindow(null, null);
@@ -101,7 +105,7 @@ class MainWindow : Gtk.Window {
 		scrolled.add_with_viewport(app_grid);
 		
 		//SearchEntry
-		Gtk.Entry search_entry = new Gtk.Entry();
+		search_entry = new Gtk.Entry();
 		search_entry.activate.connect( () => {
 			application_handler.filter_apps(Filter_by.SEARCH, search_entry.get_text());
 		} );
@@ -177,11 +181,22 @@ class MainWindow : Gtk.Window {
 			application_handler.filter_apps(Filter_by.CATEGORIES, "Utility");
 			search_entry.set_text("");
 			return true; } );
+		
+		//
+		this.add(outer_grid);
 	}
 	
 	//The following methods will be called from outside this class
-	//(dbus, application indicator)
-
+	//(dbus, application-indicator, etc.)
+	
+	public void toggle_visibiliy() {
+		if (this.get_visible()) {
+			hide_Window();
+		} else {
+			show_Window();
+		}
+	}
+	
 	public void show_Window() {
 		//Show the application window
 		this.show_all();
@@ -189,6 +204,15 @@ class MainWindow : Gtk.Window {
 	
 	public void hide_Window() {
 		//Hide the application window
+		
+		//Make sure the window looks exactly as if the application
+		//had just started.
+		//We do all this before we hide the window and not before we
+		//show it again! (To reduce time to show window)
+		application_handler.filter_apps(Filter_by.ALL, null);
+		search_entry.set_text("");
+		search_entry.grab_focus();
+		
 		this.hide();
 	}
 	

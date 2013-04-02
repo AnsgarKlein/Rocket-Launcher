@@ -21,5 +21,6 @@ interface DBus_Server : Object {
 
 enum dbus_request {
 	show,
-	hide
+	hide,
+	toggle
 }
