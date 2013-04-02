@@ -24,7 +24,6 @@ class MainWindow : Gtk.Window {
 	private ApplicationHandler application_handler;
 	
 	public MainWindow() {
-		//Basic Setup
 		Object(type: Gtk.WindowType.TOPLEVEL);
 		
 		//Set Application Icon
@@ -65,26 +64,46 @@ class MainWindow : Gtk.Window {
 		//Setup Gui
 		build_gui();
 		this.delete_event.connect( () => {
-				hide_Window();
-				return true;
-			} );
+			hide_Window();
+			return true;
+		} );
 		//this.destroy.connect(Gtk.main_quit);	//FIXME: not sure when this is emitted
 		
+		
 		//Setup Signals
+		
+		//  -  Refresh app grid if selection changed (remove all and add appropriate)
 		application_handler.selection_changed.connect( () => {
-			//Remove all apps from app grid
 			app_grid.clear();
 			
-			//Add the corresponding (to the index) app icon to the app grid
 			foreach (int integer in application_handler.get_current_apps()) {
 				app_grid.add(app_icon_list.nth_data(integer));
 			}
 		});
+		
+		//  -  Hide window if you press escape
+		base.key_press_event.connect( (k) => {
+			if (Gdk.Key.Escape == k.keyval) {
+				hide_Window();
+				return true;
+			} else {
+				return false;
+			}
+		} );
+		
+		//  -  Hide window if it loses focus
+		base.focus_out_event.connect( () => {
+			hide_Window();
+			return true;
+		} );
 	}
 	
 	public void build_gui() {
 		base.set_title("Panzerfaust");
 		base.set_position(Gtk.WindowPosition.CENTER);
+		base.set_decorated(false);
+		base.set_keep_above(true);
+		base.set_deletable(false);
 		base.set_default_size(750, 600);
 		
 		Gtk.Grid outer_grid = new Gtk.Grid();
