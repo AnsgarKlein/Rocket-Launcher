@@ -27,12 +27,12 @@ class MainWindow : Gtk.Window {
 		
 		//Set Application Icon
 		try {
-			base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.application_icon, 100, 0));
+			base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.application_icon, 256, 0));
 		} catch (Error e) {
 			stderr.printf("Error: %s\n", e.message);
 			stderr.printf("Setting application icon failed, using fallback icon...\n");
 			try {
-				base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.fallback_icon, 100, 0));
+				base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.fallback_icon, 256, 0));
 			} catch (Error e) {
 				stderr.printf("Error: %s\n", e.message);
 				stderr.printf("Setting application icon failed...\n");
@@ -40,12 +40,12 @@ class MainWindow : Gtk.Window {
 		}
 		base.style_set.connect( () => {
 			try {
-				base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.application_icon, 100, 0));
+				base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.application_icon, 256, 0));
 			} catch (Error e) {
 				stderr.printf("Error: %s\n", e.message);
 				stderr.printf("Setting application icon failed, using fallback icon...\n");
 				try {
-					base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.fallback_icon, 100, 0));
+					base.set_icon(Gtk.IconTheme.get_default().load_icon(GlobalSettings.fallback_icon, 256, 0));
 				} catch (Error e) {
 					stderr.printf("Error: %s\n", e.message);
 					stderr.printf("Setting application icon failed...\n");
