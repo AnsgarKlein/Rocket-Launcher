@@ -3,8 +3,8 @@ BINARYDIR	=	build/
 
 MISCDIR		=	res/
 
-ICONDIR		=	/usr/share/pixmaps/
-ICON		=	panzerfaust-launcher.png
+ICONDIR		=	/usr/share/icons/hicolor/
+ICON		=	panzerfaust-launcher
 
 DESKTOPFILEDIR	=	/usr/share/applications/
 DESKTOPFILE	=	panzerfaust-launcher.desktop
@@ -83,16 +83,56 @@ install: all
 	cp $(BINARYDIR)$(DAEMON_BINARY) /usr/bin/$(DAEMON_BINARY)
 	cp $(BINARYDIR)$(EXEC_BINARY) /usr/bin/$(EXEC_BINARY)
 	
-	cp $(MISCDIR)$(ICON) $(ICONDIR)$(ICON)
+	mkdir --parents $(ICONDIR)16x16/apps/
+	mkdir --parents $(ICONDIR)22x22/apps/
+	mkdir --parents $(ICONDIR)24x24/apps/
+	mkdir --parents $(ICONDIR)32x32/apps/
+	mkdir --parents $(ICONDIR)36x36/apps/
+	mkdir --parents $(ICONDIR)48x48/apps/
+	mkdir --parents $(ICONDIR)64x64/apps/
+	mkdir --parents $(ICONDIR)72x72/apps/
+	mkdir --parents $(ICONDIR)96x96/apps/
+	mkdir --parents $(ICONDIR)128x128/apps/
+	mkdir --parents $(ICONDIR)192x192/apps/
+	mkdir --parents $(ICONDIR)256x256/apps/
+	mkdir --parents $(ICONDIR)512x512/apps/
+	
+	cp $(MISCDIR)$(ICON)_16x16.png $(ICONDIR)16x16/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_22x22.png $(ICONDIR)22x22/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_24x24.png $(ICONDIR)24x24/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_32x32.png $(ICONDIR)32x32/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_36x36.png $(ICONDIR)36x36/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_48x48.png $(ICONDIR)48x48/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_64x64.png $(ICONDIR)64x64/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_72x72.png $(ICONDIR)72x72/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_96x96.png $(ICONDIR)96x96/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_128x128.png $(ICONDIR)128x128/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_192x192.png $(ICONDIR)192x192/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_256x256.png $(ICONDIR)256x256/apps/$(ICON).png
+	cp $(MISCDIR)$(ICON)_512x512.png $(ICONDIR)512x512/apps/$(ICON).png
+	
 	cp $(MISCDIR)$(DESKTOPFILE) $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	@echo sucessfully installed
 
 uninstall:
-	rm -f /usr/bin/$(DAEMON_BINARY)
-	rm -f /usr/bin/$(EXEC_BINARY)
+	rm --force /usr/bin/$(DAEMON_BINARY)
+	rm --force /usr/bin/$(EXEC_BINARY)
 	
-	rm -f $(ICONDIR)$(ICON)
-	rm -f $(DESKTOPFILEDIR)$(DESKTOPFILE)
+	rm --force $(ICONDIR)16x16/apps/$(ICON).png
+	rm --force $(ICONDIR)22x22/apps/$(ICON).png
+	rm --force $(ICONDIR)24x24/apps/$(ICON).png
+	rm --force $(ICONDIR)32x32/apps/$(ICON).png
+	rm --force $(ICONDIR)36x36/apps/$(ICON).png
+	rm --force $(ICONDIR)48x48/apps/$(ICON).png
+	rm --force $(ICONDIR)64x64/apps/$(ICON).png
+	rm --force $(ICONDIR)72x72/apps/$(ICON).png
+	rm --force $(ICONDIR)96x96/apps/$(ICON).png
+	rm --force $(ICONDIR)128x128/apps/$(ICON).png
+	rm --force $(ICONDIR)192x192/apps/$(ICON).png
+	rm --force $(ICONDIR)256x256/apps/$(ICON).png
+	rm --force $(ICONDIR)512x512/apps/$(ICON).png
+	
+	rm --force $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	@echo sucessfully uninstalled
 
 linecount:
