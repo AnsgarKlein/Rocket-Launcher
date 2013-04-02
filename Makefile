@@ -110,8 +110,10 @@ install: all
 	cp $(MISCDIR)$(ICON)_192x192.png $(ICONDIR)192x192/apps/$(ICON).png
 	cp $(MISCDIR)$(ICON)_256x256.png $(ICONDIR)256x256/apps/$(ICON).png
 	cp $(MISCDIR)$(ICON)_512x512.png $(ICONDIR)512x512/apps/$(ICON).png
+	ln --symbolic --force $(ICONDIR)512x512/apps/$(ICON).png /usr/share/pixmaps/$(ICON).png
 	
 	cp $(MISCDIR)$(DESKTOPFILE) $(DESKTOPFILEDIR)$(DESKTOPFILE)
+	update-icon-caches $(ICONDIR)
 	@echo sucessfully installed
 
 uninstall:
@@ -131,8 +133,10 @@ uninstall:
 	rm --force $(ICONDIR)192x192/apps/$(ICON).png
 	rm --force $(ICONDIR)256x256/apps/$(ICON).png
 	rm --force $(ICONDIR)512x512/apps/$(ICON).png
+	rm --force /usr/share/pixmaps/$(ICON).png
 	
 	rm --force $(DESKTOPFILEDIR)$(DESKTOPFILE)
+	update-icon-caches $(ICONDIR)
 	@echo sucessfully uninstalled
 
 linecount:
