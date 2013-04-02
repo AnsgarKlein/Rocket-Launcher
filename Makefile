@@ -18,11 +18,9 @@ DAEMON_PACKAGES	+=	--pkg gio-2.0
 DAEMON_PACKAGES	+=	--pkg gtk+-3.0
 DAEMON_PACKAGES	+=	--pkg appindicator3-0.1
 
-DAEMON_CFLAGS	=	--debug
 DAEMON_CFLAGS	+=	--thread
 DAEMON_CFLAGS	+=	$(DAEMON_PACKAGES)
 DAEMON_CFLAGS	+=	-X -w
-#DAEMON_CFLAGS	+=	-X -O3
 
 DAEMON_SOURCES	+=	src/*.vala
 DAEMON_SOURCES	+=	src/AppHandling/*.vala
@@ -39,11 +37,9 @@ DAEMON_BINARY	=	panzerfaust-launcher-daemon
 EXEC_PACKAGES	=	--pkg glib-2.0
 EXEC_PACKAGES	+=	--pkg gio-2.0
 
-EXEC_CFLAGS	=	--debug
-EXEC_CFLAGS	=	--thread
-EXEC_CFLAGS	=	$(EXEC_PACKAGES)
+EXEC_CFLAGS	+=	--thread
+EXEC_CFLAGS	+=	$(EXEC_PACKAGES)
 EXEC_CFLAGS	+=	-X -w
-#EXEC_CFLAGS	+=	-X -O3
 
 EXEC_SOURCES	=	src/D-Bus-Client/*.vala
 
@@ -60,6 +56,15 @@ clean:
 	rm -f $(BINARYDIR)$(DAEMON_BINARY)
 	rm -f $(BINARYDIR)$(EXEC_BINARY)
 	@echo sucessfully cleaned
+
+debug: DAEMON_CFLAGS	+=	--debug
+debug: EXEC_CFLAGS	+=	--debug
+debug: all
+
+release: DAEMON_CFLAGS	+=	-X -O3
+release: EXEC_CFLAGS	+=	-X -O3
+release: all
+
 
 $(BINARYDIR)$(DAEMON_BINARY): $(DAEMON_SOURCES)
 	@echo "\n\nCompiling the daemon executable...\n"
