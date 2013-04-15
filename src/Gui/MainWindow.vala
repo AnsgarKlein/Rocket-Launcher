@@ -53,7 +53,8 @@ class MainWindow : Gtk.Window {
 				}
 			}
 		} );
-				
+		
+		
 		//Setup Basic
 		application_handler = new ApplicationHandler();
 		foreach (App app in application_handler.get_apps()) {
@@ -61,18 +62,15 @@ class MainWindow : Gtk.Window {
 			app_icon_list.append(app_icon);
 		}
 		
+		
 		//Setup Gui
 		build_gui();
-		this.delete_event.connect( () => {
-			hide_Window();
-			return true;
-		} );
-		//this.destroy.connect(Gtk.main_quit);	//FIXME: not sure when this is emitted
 		
 		
 		//Setup Signals
 		
-		//  -  Refresh app grid if selection changed (remove all and add appropriate)
+		//  -  Refresh app grid if selection changed
+		//  -  (remove all and add appropriate)
 		application_handler.selection_changed.connect( () => {
 			app_grid.clear();
 			
@@ -80,6 +78,14 @@ class MainWindow : Gtk.Window {
 				app_grid.add(app_icon_list.nth_data(integer));
 			}
 		});
+		
+		
+		//  -  Only hide window on delete_event
+		this.delete_event.connect( () => {
+			hide_Window();
+			return true;
+		} );
+		
 		
 		//  -  Hide window if you press escape
 		base.key_press_event.connect( (k) => {
@@ -90,6 +96,7 @@ class MainWindow : Gtk.Window {
 				return false;
 			}
 		} );
+		
 		
 		//  -  Hide window if it loses focus
 		base.focus_out_event.connect( () => {
