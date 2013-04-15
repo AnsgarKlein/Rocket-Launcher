@@ -97,6 +97,7 @@ class AppIcon : Gtk.Box {
 		
 		// ---> Setup Button
 		Gtk.Button button = new Gtk.Button();
+		button.set_relief(Gtk.ReliefStyle.NONE);
 		button.clicked.connect(app.start);
 		this.pack_start(button);
 		

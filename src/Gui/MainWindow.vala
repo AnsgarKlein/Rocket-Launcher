@@ -113,6 +113,15 @@ class MainWindow : Gtk.Window {
 		base.set_deletable(false);
 		base.set_default_size(750, 600);
 		
+		//Prerequesites for transparency and cairo drawing in general
+		base.set_app_paintable(true);
+		base.set_visual(screen.get_rgba_visual());
+		
+		//connect on_expose function to draw event
+		base.draw.connect(draw_transparent);
+		
+		
+		//create main grid
 		Gtk.Grid outer_grid = new Gtk.Grid();
 		outer_grid.set_column_homogeneous(false);
 		outer_grid.set_row_homogeneous(false);
@@ -148,6 +157,7 @@ class MainWindow : Gtk.Window {
 		
 		for (int i = 0; i < 14; i++) {
 			categorie_buttons[i] = new Gtk.Button.with_label(categorie_button_strings[i]);
+			categorie_buttons[i].set_relief(Gtk.ReliefStyle.NONE);
 			button_box.add(categorie_buttons[i]);
 		}
 		

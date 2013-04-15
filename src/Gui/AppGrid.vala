@@ -13,7 +13,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 **/
 
-
 using Gtk;
 
 class AppGrid : Gtk.Grid {
@@ -22,6 +21,8 @@ class AppGrid : Gtk.Grid {
 	public AppGrid() {
 		this.set_column_spacing(15);
 		this.set_row_spacing(15);
+		
+		base.draw.connect(draw_transparent);
 	}
 	
 	private int get_number_of_children() {
