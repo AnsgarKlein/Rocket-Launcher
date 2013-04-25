@@ -106,7 +106,7 @@ class MainWindow : Gtk.Window {
 	}
 	
 	public void build_gui() {
-		base.set_title("Panzerfaust");
+		base.set_title("Rocket-Launcher");
 		base.set_position(Gtk.WindowPosition.CENTER);
 		base.set_decorated(false);
 		base.set_keep_above(true);

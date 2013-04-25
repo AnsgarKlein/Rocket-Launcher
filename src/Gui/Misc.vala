@@ -3,7 +3,7 @@ private static bool draw_transparent(Cairo.Context ctx) {
 	//Gtk.Widgets.
 	//It receives a Cairo.Context and paints it all transparent
 	
-	ctx.set_source_rgba(0.811, 0.811, 0.811, 0.4);
+	ctx.set_source_rgba(0.811, 0.811, 0.811, 0.7);
 	ctx.set_operator(Cairo.Operator.SOURCE);
 	ctx.paint();
 	

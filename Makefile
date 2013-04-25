@@ -4,10 +4,10 @@ BINARYDIR	=	build/
 MISCDIR		=	res/
 
 ICONDIR		=	/usr/share/icons/hicolor/
-ICON		=	panzerfaust-launcher
+ICON		=	rocket-launcher
 
 DESKTOPFILEDIR	=	/usr/share/applications/
-DESKTOPFILE	=	panzerfaust-launcher.desktop
+DESKTOPFILE	=	rocket-launcher.desktop
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
@@ -28,7 +28,7 @@ DAEMON_SOURCES	+=	src/Gui/*.vala
 DAEMON_SOURCES	+=	src/AppIndicator/*.vala
 DAEMON_SOURCES	+=	src/D-Bus-Server/*.vala
 
-DAEMON_BINARY	=	panzerfaust-launcher-daemon
+DAEMON_BINARY	=	rocket-launcher-daemon
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
@@ -43,7 +43,7 @@ EXEC_CFLAGS	+=	-X -w
 
 EXEC_SOURCES	=	src/D-Bus-Client/*.vala
 
-EXEC_BINARY	=	panzerfaust-launcher
+EXEC_BINARY	=	rocket-launcher
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#

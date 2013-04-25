@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Panzerfaust
+Name=Rocket-Launcher
 GenericName=Application starter
 Comment=Fast lightweight application starter
-Exec=panzerfaust-launcher
-Icon=panzerfaust-launcher
+Exec=rocket-launcher
+Icon=rocket-launcher
 Terminal=false
 Type=Application
 Categories=Utility;

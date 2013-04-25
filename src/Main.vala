@@ -47,11 +47,11 @@ static int main(string[] args) {
 	
 	//Start D-Bus server
 	GLib.Bus.own_name(GLib.BusType.SESSION,
-				"org.launcher.panzerfaust",
+				"org.launcher.rocket",
 				BusNameOwnerFlags.NONE,
 				(dbusconnection, name) => {
 					try {
-						dbusconnection.register_object("/org/launcher/panzerfaust", new DBusServer(mainWindow));
+						dbusconnection.register_object("/org/launcher/rocket", new DBusServer(mainWindow));
 					} catch (IOError e) {
 						stderr.printf("Could not register service\n");
 					}

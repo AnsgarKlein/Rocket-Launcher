@@ -15,6 +15,6 @@
 
 
 namespace GlobalSettings {
-	const string application_icon = "panzerfaust-launcher";
+	const string application_icon = "rocket-launcher";
 	const string fallback_icon = "application-x-executable";
 }

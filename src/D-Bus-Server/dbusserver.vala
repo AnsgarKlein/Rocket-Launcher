@@ -14,7 +14,7 @@
 **/
 
 
-[DBus (name = "org.launcher.panzerfaust")]
+[DBus (name = "org.launcher.rocket")]
 class DBusServer {
 	MainWindow mainWindow;
 	public DBusServer(MainWindow mainWindow) {
@@ -29,7 +29,6 @@ class DBusServer {
 		
 		//when true: print line on incoming dbus request
 		bool debug = false;
-		
 		
 		if (debug) stdout.printf("Incoming D-Bus request:\t");
 		
@@ -50,11 +49,6 @@ class DBusServer {
 			mainWindow.toggle_visibiliy();
 			break;
 		}
-		
-		/**bool error = false;
-		if (error) {
-			return false;
-		}**/
 		
 		return true;
 	}

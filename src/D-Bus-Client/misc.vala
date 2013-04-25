@@ -14,7 +14,7 @@
 **/
 
 
-[DBus (name = "org.launcher.panzerfaust")]
+[DBus (name = "org.launcher.rocket")]
 interface DBus_Server : Object {
 	public abstract bool send(dbus_request request) throws IOError;
 }

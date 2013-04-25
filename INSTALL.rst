@@ -1,18 +1,18 @@
-Installation Instructions for Panzerfaust
+Installation Instructions for Rocket-Launcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 Gtk3
 ----
 
-To install Panzerfaust you will need to have Gtk3 installed.
+To install Rocket-Launcher you will need to have Gtk3 installed.
 
 
 
 appindicator
 ------------
 
-Panzerfaust uses the appindicator library to supply an indicator in the message-area.
+Rocket-Launcher uses the appindicator library to supply an indicator in the message-area.
 So you will need the libappindicator library and its vala bindings.
 
 On Ubuntu (12.10) theses packages are called:
@@ -25,7 +25,7 @@ On Ubuntu (12.10) theses packages are called:
 Vala
 ----
 
-Since Panzerfaust is written in Vala you also need the vala compiler (valac) and it's dependencies.
+Since Rocket-Launcher is written in Vala you also need the vala compiler (valac) and it's dependencies.
 
 You will need at least version 0.16 to compile successfully.
 

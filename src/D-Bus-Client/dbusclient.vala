@@ -28,7 +28,7 @@ static int main(string[] args) {
 	GLib.MainLoop temp_loop = new GLib.MainLoop();
 	
 	GLib.Bus.watch_name(BusType.SESSION,
-				"org.launcher.panzerfaust",
+				"org.launcher.rocket",
 				BusNameWatcherFlags.AUTO_START,
 				() => {
 					service_exists = true;
@@ -49,7 +49,7 @@ static int main(string[] args) {
 		stdout.printf("trying to start it ....\n");
 		
 		try {
-			string[] argv = {"panzerfaust-launcher-daemon", ""};
+			string[] argv = {"rocket-launcher-daemon", ""};
 			if (args[1] == "--minimized" || args[1] == "-m") {
 				argv[1] = "--minimized";
 			} else {
@@ -89,8 +89,8 @@ static int main(string[] args) {
 	DBus_Server dbus_server = null;
 	try {
 		dbus_server = GLib.Bus.get_proxy_sync(BusType.SESSION,
-									"org.launcher.panzerfaust",
-									"/org/launcher/panzerfaust",
+									"org.launcher.rocket",
+									"/org/launcher/rocket",
 									GLib.DBusProxyFlags.NONE,
 									null);
 		
