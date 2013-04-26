@@ -18,6 +18,7 @@ using Gtk;
 
 class MainWindow : Gtk.Window {
 	private AppGrid app_grid;
+	private Gtk.ScrolledWindow scrolled;
 	private Gtk.Entry search_entry;
 	
 	private List<AppIcon> app_icon_list;
@@ -127,7 +128,7 @@ class MainWindow : Gtk.Window {
 		outer_grid.set_row_homogeneous(false);
 		
 		//Scrolled Area
-		Gtk.ScrolledWindow scrolled = new Gtk.ScrolledWindow(null, null);
+		scrolled = new Gtk.ScrolledWindow(null, null);
 		scrolled.set_policy(PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
 		outer_grid.attach(scrolled, 0, 0, 1, 2);
 		
@@ -246,6 +247,7 @@ class MainWindow : Gtk.Window {
 		//We do all this before we hide the window and not before we
 		//show it again! (To reduce time to show window)
 		application_handler.filter_apps(Filter_by.ALL, null);
+		scrolled.get_vadjustment().set_value(0);
 		search_entry.set_text("");
 		search_entry.grab_focus();
 		
