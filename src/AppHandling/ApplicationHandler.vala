@@ -16,12 +16,65 @@
 
 class ApplicationHandler {
 	
-	private string[] directories = {"/usr/share/applications", GLib.Environment.get_home_dir()+"/.local/share/applications"};
+	private string[] directories;
+	private string[] directories_fallback = { "/usr/share/applications",
+											"/usr/local/share/applications",
+											GLib.Environment.get_home_dir()
+											+"/.local/share/applications" };
 	
 	private List<App> apps;
 	private List<int> current_apps;
 	
 	public ApplicationHandler() {
+		//Select right directories to search in
+		
+		//If XDG_DATA_DIRS is set use all listed directories+/applications
+		//to search for desktop files. Also search in some default locations
+		//If XDG_DATA_DIRS is not set only search in default locations
+		//Notice: It is not checked whether these directories exist, but
+		//it should not be a problem if they don't. 
+		string directories_environ = GLib.Environment.get_variable("XDG_DATA_DIRS");
+		
+		if (directories_environ != null) {
+			List<string> directories_l = new List<string>();
+			
+			//Append values from $XDG_DATA_DIRS
+			foreach (string dir in directories_environ.split(":")) {
+				//Append '/' if necessary
+				//then append "applications"
+				if (dir.to_utf8()[dir.length-1] != '/') {
+					dir = string.join("", dir, "/applications");
+				} else {
+					dir = string.join("", dir, "applications");
+				}
+				directories_l.append(dir);
+			}
+			
+			//Append fallback values if they aren't already in list
+			foreach (string fallback_dir in directories_fallback) {
+				bool contains = false;
+				foreach (string dir in directories_l) {
+					if (fallback_dir == dir) {
+						contains = true;
+						break;
+					}
+				}
+				if (!contains) {
+					directories_l.append(fallback_dir);
+				} else {
+				}
+			}
+			
+			//Convert List to array
+			directories = new string[directories_l.length()];
+			for (int i = 0; i < directories_l.length(); i++) {
+				directories[i] = directories_l.nth_data(i);
+			}
+		} else {
+			stdout.printf("XDG_DATA_DIRS is not set, falling back to defaults\n");
+			directories = directories_fallback;
+		}
+		
 		//Scan applications
 		apps = new List<App>();
 		scan_applications();
