@@ -114,6 +114,12 @@ class ApplicationHandler {
 				stdout.printf("Directory: "+d+"\n");
 			}
 		}
+		
+		//Sort list
+		
+		//We only sort the "apps" list (by app name)
+		//That way "current_apps" will always be sorted
+		apps.sort((CompareFunc)sortAppList);
 	}
 	
 	public unowned List<App> get_apps() {
@@ -210,6 +216,10 @@ class ApplicationHandler {
 		
 		// ---> Notify
 		selection_changed();
+	}
+	
+	private static int sortAppList(App a, App b) {
+		return GLib.strcmp(a.get_name(), b.get_name());
 	}
 	
 	public signal void selection_changed();
