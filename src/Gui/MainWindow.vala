@@ -60,6 +60,7 @@ class MainWindow : Gtk.Window {
 		application_handler = new ApplicationHandler();
 		foreach (App app in application_handler.get_apps()) {
 			AppIcon app_icon = new AppIcon(app);
+			app_icon.started.connect(this.hide_Window);
 			app_icon_list.append(app_icon);
 		}
 		

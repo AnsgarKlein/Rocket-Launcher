@@ -98,7 +98,10 @@ class AppIcon : Gtk.Box {
 		// ---> Setup Button
 		Gtk.Button button = new Gtk.Button();
 		button.set_relief(Gtk.ReliefStyle.NONE);
-		button.clicked.connect(app.start);
+		button.clicked.connect( () => {
+				app.start();
+				started();
+			} );
 		this.pack_start(button);
 		
 		
@@ -146,4 +149,6 @@ class AppIcon : Gtk.Box {
 		button.set_tooltip_text(tooltip);
 
 	}
+	
+	public signal void started();
 }
