@@ -111,7 +111,7 @@ class ApplicationHandler {
 			catch (Error e) {
 				stderr.printf("\nError occured while scanning directories\n");
 				stderr.printf("Error: \""+e.message+"\"\n");
-				stdout.printf("Directory: "+d+"\n");
+				stderr.printf("Directory: "+d+"\n");
 			}
 		}
 		
