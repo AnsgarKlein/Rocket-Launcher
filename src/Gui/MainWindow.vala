@@ -146,6 +146,14 @@ class MainWindow : Gtk.Window {
 		search_entry.activate.connect( () => {
 			application_handler.filter_apps(Filter_by.SEARCH, search_entry.get_text());
 		} );
+		search_entry.changed.connect( () => {
+			string text;
+			if ((text = search_entry.get_text()) == "") {
+				application_handler.filter_apps(Filter_by.ALL, null);
+			} else {
+				application_handler.filter_apps(Filter_by.SEARCH, search_entry.get_text());
+			}
+		} );
 		outer_grid.attach(search_entry, 1, 0, 1, 1);
 		
 		//CategoryButtons
