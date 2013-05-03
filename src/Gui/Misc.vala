@@ -1,14 +1,22 @@
-private static bool draw_transparent(Cairo.Context ctx) {
-	//This function is bound to several 'draw' events of different
-	//Gtk.Widgets.
-	//It receives a Cairo.Context and paints it all transparent
+namespace Gui {
 	
-	ctx.set_source_rgba(0.811, 0.811, 0.811, 0.7);
-	ctx.set_operator(Cairo.Operator.SOURCE);
-	ctx.paint();
+	private static bool draw_transparent(Cairo.Context ctx) {
+		//This function is bound to several 'draw' events of different
+		//Gtk.Widgets.
+		//It receives a Cairo.Context and paints it all transparent
+		
+		ctx.set_source_rgba(Gui.bg_color[0], Gui.bg_color[1],
+							Gui.bg_color[2], Gui.bg_color[3]);
+		ctx.set_operator(Cairo.Operator.SOURCE);
+		ctx.paint();
+		
+		//Return false so that other callbacks for the 'draw' event
+		//will be invoked. (Other callbacks are responsible for the actual
+		//drawing of the Gtk.Widget)
+		return false;
+	}
 	
-	//Return false so that other callbacks for the 'draw' event
-	//will be invoked. (Other callbacks are responsible for the actual
-	//drawing of the Gtk.Widget)
-	return false;
+	private static const double[] bg_color = { 0.811, 0.811, 0.811, 0.7 };
+	//private static const double[] bg_color = { 0, 0, 0, 0.5 };
+	
 }

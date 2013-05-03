@@ -24,6 +24,8 @@ class MainWindow : Gtk.Window {
 	private List<AppIcon> app_icon_list;
 	private ApplicationHandler application_handler;
 	
+	private const int border_size = 25;
+	
 	public MainWindow() {
 		Object(type: Gtk.WindowType.TOPLEVEL);
 		
@@ -114,13 +116,139 @@ class MainWindow : Gtk.Window {
 		base.set_keep_above(true);
 		base.set_deletable(false);
 		base.set_default_size(750, 600);
+		base.set_border_width(border_size);
 		
 		//Prerequesites for transparency and cairo drawing in general
 		base.set_app_paintable(true);
 		base.set_visual(screen.get_rgba_visual());
 		
-		//connect on_expose function to draw event
-		base.draw.connect(draw_transparent);
+		//On draw event: draw window semi transparent
+		base.draw.connect( (ctx) => {
+			const double PI = 3.1415926535897932384626433832795028841971693993751058;
+			int height = this.get_window().get_height();
+			int width = this.get_window().get_width();
+			
+			//Draw everywhere on window
+			ctx.set_source_rgba(Gui.bg_color[0], Gui.bg_color[1],
+								Gui.bg_color[2], Gui.bg_color[3]);
+			ctx.set_operator(Cairo.Operator.SOURCE);
+			ctx.paint();
+			
+			//Make corners transparent
+			ctx.set_source_rgba(0.0, 0.0, 0.0, 0.0);
+			ctx.rectangle(0, 0, border_size, border_size);
+			ctx.rectangle(0, height - border_size, border_size, border_size);
+			ctx.rectangle(width - border_size, 0, border_size, border_size);
+			ctx.rectangle(width - border_size, height - border_size, border_size, border_size);
+			ctx.fill();
+			
+			//Paint gradient in top left corner
+			Cairo.Pattern grad_tl = new Cairo.Pattern.radial(
+						border_size, border_size, 0,
+						border_size, border_size, border_size);
+			grad_tl.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_tl.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.move_to(border_size, border_size);
+			ctx.arc(border_size, border_size, border_size, 1.0 * PI,
+						1.5 * PI);
+			ctx.set_source(grad_tl);
+			ctx.fill();
+			
+			//Paint gradient in top right corner
+			Cairo.Pattern grad_tr = new Cairo.Pattern.radial(
+						width - border_size, border_size, 0,
+						width - border_size, border_size, border_size);
+			grad_tr.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_tr.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.move_to(width - border_size, border_size);
+			ctx.arc(width - border_size, border_size, border_size,
+						1.5 * PI, 2.0 * PI);
+			ctx.set_source(grad_tr);
+			ctx.fill();
+			
+			//Paint gradient in bottom left corner
+			Cairo.Pattern grad_bl = new Cairo.Pattern.radial(
+						border_size, height - border_size, 0,
+						border_size, height - border_size, border_size);
+			grad_bl.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_bl.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.move_to(border_size, height - border_size);
+			ctx.arc(border_size, height - border_size, border_size,
+						0.5 * PI, 1.0 * PI);
+			ctx.set_source(grad_bl);
+			ctx.fill();
+			
+			//Paint gradient in bottom right corner
+			Cairo.Pattern grad_br = new Cairo.Pattern.radial(
+						width - border_size, height - border_size, 0,
+						width - border_size, height - border_size, border_size);
+			grad_br.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_br.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.move_to(width - border_size, border_size);
+			ctx.arc(width - border_size, height - border_size, border_size,
+						0, 0.5 * PI);
+			ctx.set_source(grad_br);
+			ctx.fill();
+			
+			//Paint top gradient
+			Cairo.Pattern grad_t = new Cairo.Pattern.linear(0,
+						border_size, 0, 0);
+			grad_t.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_t.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.rectangle(border_size, 0, width - (2 * border_size),
+						border_size);
+			ctx.set_source(grad_t);
+			ctx.fill();
+			
+			//Paint bottom gradient
+			Cairo.Pattern grad_b = new Cairo.Pattern.linear(0,
+						height - border_size, 0, height);
+			grad_b.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_b.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.rectangle(border_size, height - border_size,
+						width - (2 * border_size), border_size);
+			ctx.set_source(grad_b);
+			ctx.fill();
+			
+			//Paint left gradient
+			Cairo.Pattern grad_l = new Cairo.Pattern.linear(border_size,
+							0, 0, 0);
+			grad_l.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_l.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.rectangle(0, border_size, border_size,
+						height - (2 * border_size));
+			ctx.set_source(grad_l);
+			ctx.fill();
+			
+			//Paint right gradient
+			Cairo.Pattern grad_r = new Cairo.Pattern.linear(
+						width - border_size, 0, width, 0);
+			grad_r.add_color_stop_rgba(0.3, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], Gui.bg_color[3]);
+			grad_r.add_color_stop_rgba(1.0, Gui.bg_color[0],
+						Gui.bg_color[1], Gui.bg_color[2], 0.0);
+			ctx.rectangle(width - border_size,
+						border_size, border_size,
+						height - (2 * border_size));
+			ctx.set_source(grad_r);
+			ctx.fill();
+			
+			return false;
+		});
 		
 		
 		//create main grid

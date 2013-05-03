@@ -22,7 +22,7 @@ class AppGrid : Gtk.Grid {
 		this.set_column_spacing(15);
 		this.set_row_spacing(15);
 		
-		base.draw.connect(draw_transparent);
+		base.draw.connect(Gui.draw_transparent);
 	}
 	
 	private int get_number_of_children() {
