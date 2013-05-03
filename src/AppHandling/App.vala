@@ -172,7 +172,7 @@ class App {
 		
 	}
 	
-	public bool is_vaild() {
+	public bool is_valid() {
 		return valid;
 	}
 	

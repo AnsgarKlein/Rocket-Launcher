@@ -101,7 +101,7 @@ class ApplicationHandler {
 						//we wait until it parsed the file and confirmed that it is
 						//valid, then we add it to the list
 						App new_app = new App(x);
-						if (new_app.is_vaild()) {
+						if (new_app.is_valid()) {
 							apps.append(new_app);
 						}
 					}
