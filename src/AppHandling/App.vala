@@ -70,15 +70,15 @@ class App {
 			}
 			
 			// --- <Name>
-			if (!kf.has_key("Desktop Entry", "Name")) {
+			try {
+				app_name = kf.get_value("Desktop Entry", "Name");
+			} catch (KeyFileError e) {
 				stderr.printf("\nKeyValue File is not a valid .desktop file\n");
 				stderr.printf("KeyValue 'Name' does not exist\n");
 				stderr.printf("Path: %s\n", path);
 				stderr.printf("ignoring file ...\n");
 				valid = false;
 				return;
-			} else {
-				app_name = kf.get_value("Desktop Entry", "Name");
 			}
 			
 			// --- <Type>
@@ -92,15 +92,15 @@ class App {
 			}
 			
 			// --- <Exec>
-			if (!kf.has_key("Desktop Entry", "Exec")) {
+			try {
+				app_exec = kf.get_value("Desktop Entry", "Exec");
+			} catch (KeyFileError e) {
 				stderr.printf("\nKeyValue File is not a valid .desktop file\n");
 				stderr.printf("KeyValue 'Exec' does not exist\n");
 				stderr.printf("Path: %s\n", path);
 				stderr.printf("ignoring file ...\n");
 				valid = false;
 				return;
-			} else {
-				app_exec = kf.get_value("Desktop Entry", "Exec");
 			}
 			
 			// --- <NoDisplay>
@@ -120,28 +120,38 @@ class App {
 			}
 			
 			// --- <GenericName>
-			if (kf.has_key("Desktop Entry", "GenericName")) {
+			try {
 				app_generic_name = kf.get_value("Desktop Entry", "GenericName");
+			} catch (KeyFileError e) {
+				
 			}
 			
 			// --- <Comment>
-			if (kf.has_key("Desktop Entry", "Comment")) {
+			try {
 				app_comment = kf.get_value("Desktop Entry", "Comment");
+			} catch (KeyFileError e) {
+				
 			}
 			
 			// --- <Icon>
-			if (kf.has_key("Desktop Entry", "Icon")) {
+			try {
 				app_icon = kf.get_value("Desktop Entry", "Icon");
+			} catch (KeyFileError e) {
+				
 			}
 			
 			// --- <Categories>
-			if (kf.has_key("Desktop Entry", "Categories")) {
+			try {
 				app_categories = kf.get_value("Desktop Entry", "Categories").split_set(";", 0);
+			} catch (KeyFileError e) {
+				
 			}
 			
 			// --- <Path>
-			if (kf.has_key("Desktop Entry", "Path")) {
+			try {
 				app_path = kf.get_value("Desktop Entry", "Path");
+			} catch (KeyFileError e) {
+				
 			}
 			
 			// --- <Terminal>
