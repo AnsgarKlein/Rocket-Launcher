@@ -53,5 +53,5 @@ When you have all dependencies installed simply do:
 Usage
 -----
 
-Once you have installed Panzerfaust you can start it with the 'panzerfaust-launcher' command,
+Once you have installed Rocket-Launcher you can start it with the 'rocket-launcher' command,
 or with through the included .desktop file.
