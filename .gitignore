@@ -1,2 +1,5 @@
 #ignore temp files (like created by gedit)
 *~
+
+#ignore c files (created by valac)
+*.c
