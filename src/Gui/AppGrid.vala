@@ -22,7 +22,20 @@ class AppGrid : Gtk.Grid {
 		this.set_column_spacing(15);
 		this.set_row_spacing(15);
 		
-		base.draw.connect(Gui.draw_transparent);
+		if (Gdk.Screen.get_default().is_composited()) {
+			//Draw background transparent
+			base.draw.connect( (context) => {
+				context.set_source_rgba(Gui.bg_color[0], Gui.bg_color[1],
+				Gui.bg_color[2], Gui.bg_color[3]);
+				context.set_operator(Cairo.Operator.SOURCE);
+				context.paint();
+				
+				//Return false so that other callbacks for the 'draw' event
+				//will be invoked. (Other callbacks are responsible for the actual
+				//drawing of the widgets)
+				return false;
+			});
+		}
 	}
 	
 	private int get_number_of_children() {
