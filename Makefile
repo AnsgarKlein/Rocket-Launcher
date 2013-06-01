@@ -18,13 +18,15 @@ DAEMON_PACKAGES	+=	--pkg gio-2.0
 DAEMON_PACKAGES	+=	--pkg gtk+-3.0
 
 DAEMON_CFLAGS	+=	--thread
+DAEMON_CFLAGS	+=	--save-temps
 DAEMON_CFLAGS	+=	$(DAEMON_PACKAGES)
 DAEMON_CFLAGS	+=	-X -w
 
-DAEMON_SOURCES	+=	src/*.vala
-DAEMON_SOURCES	+=	src/AppHandling/*.vala
-DAEMON_SOURCES	+=	src/Gui/*.vala
-DAEMON_SOURCES	+=	src/D-Bus-Server/*.vala
+DAEMON_SOURCES	+=	$(wildcard src/*.vala)
+DAEMON_SOURCES	+=	$(wildcard src/AppHandling/*.vala)
+DAEMON_SOURCES	+=	$(wildcard src/Gui/*.vala)
+DAEMON_SOURCES	+=	$(wildcard src/D-Bus-Server/*.vala)
+DAEMON_SOURCES_C	=	$(DAEMON_SOURCES:.vala=.c)
 
 DAEMON_BINARY	=	rocket-launcher-daemon
 
@@ -36,10 +38,12 @@ EXEC_PACKAGES	=	--pkg glib-2.0
 EXEC_PACKAGES	+=	--pkg gio-2.0
 
 EXEC_CFLAGS	+=	--thread
+EXEC_CFLAGS	+=	--save-temps
 EXEC_CFLAGS	+=	$(EXEC_PACKAGES)
 EXEC_CFLAGS	+=	-X -w
 
-EXEC_SOURCES	=	src/D-Bus-Client/*.vala
+EXEC_SOURCES	=	$(wildcard src/D-Bus-Client/*.vala)
+EXEC_SOURCES_C	=	$(EXEC_SOURCES:.vala=.c)
 
 EXEC_BINARY	=	rocket-launcher
 
@@ -73,6 +77,8 @@ all: $(BINARYDIR)$(DAEMON_BINARY) $(BINARYDIR)$(EXEC_BINARY)
 clean:
 	rm -f $(BINARYDIR)$(DAEMON_BINARY)
 	rm -f $(BINARYDIR)$(EXEC_BINARY)
+	rm -f $(DAEMON_SOURCES_C)
+	rm -f $(EXEC_SOURCES_C)
 	@echo sucessfully cleaned
 
 $(BINARYDIR)$(DAEMON_BINARY): $(DAEMON_SOURCES)
