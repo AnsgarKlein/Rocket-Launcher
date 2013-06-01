@@ -16,7 +16,6 @@ DESKTOPFILE	=	rocket-launcher.desktop
 DAEMON_PACKAGES	=	--pkg glib-2.0
 DAEMON_PACKAGES	+=	--pkg gio-2.0
 DAEMON_PACKAGES	+=	--pkg gtk+-3.0
-DAEMON_PACKAGES	+=	--pkg appindicator3-0.1
 
 DAEMON_CFLAGS	+=	--thread
 DAEMON_CFLAGS	+=	$(DAEMON_PACKAGES)
@@ -25,7 +24,6 @@ DAEMON_CFLAGS	+=	-X -w
 DAEMON_SOURCES	+=	src/*.vala
 DAEMON_SOURCES	+=	src/AppHandling/*.vala
 DAEMON_SOURCES	+=	src/Gui/*.vala
-DAEMON_SOURCES	+=	src/AppIndicator/*.vala
 DAEMON_SOURCES	+=	src/D-Bus-Server/*.vala
 
 DAEMON_BINARY	=	rocket-launcher-daemon
@@ -49,6 +47,26 @@ EXEC_BINARY	=	rocket-launcher
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 ################################################################################
 
+ifdef DEBUG_BUILD
+    DAEMON_CFLAGS	+=	--debug
+    EXEC_CFLAGS		+=	--debug
+else
+    ifdef RELEASE_BUILD
+        DAEMON_CFLAGS	+=	-X -O3
+        EXEC_CFLAGS		+=	-X -O3
+    endif
+endif
+
+
+ifdef WITH_APPINDICATOR
+    DAEMON_PACKAGES	+=	--pkg appindicator3-0.1
+    DAEMON_CFLAGS	+=	-D WITH_APPINDICATOR
+endif
+
+################################################################################
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+################################################################################
+
 all: $(BINARYDIR)$(DAEMON_BINARY) $(BINARYDIR)$(EXEC_BINARY)
 	@echo sucessfully compiled
 
@@ -57,15 +75,6 @@ clean:
 	rm -f $(BINARYDIR)$(EXEC_BINARY)
 	@echo sucessfully cleaned
 
-debug: DAEMON_CFLAGS	+=	--debug
-debug: EXEC_CFLAGS	+=	--debug
-debug: all
-
-release: DAEMON_CFLAGS	+=	-X -O3
-release: EXEC_CFLAGS	+=	-X -O3
-release: all
-
-
 $(BINARYDIR)$(DAEMON_BINARY): $(DAEMON_SOURCES)
 	@echo "\n\nCompiling the daemon executable...\n"
 	$(CC) $(DAEMON_CFLAGS) $(DAEMON_SOURCES) -o $(BINARYDIR)$(DAEMON_BINARY)
@@ -73,7 +82,6 @@ $(BINARYDIR)$(DAEMON_BINARY): $(DAEMON_SOURCES)
 $(BINARYDIR)$(EXEC_BINARY): $(EXEC_SOURCES)
 	@echo "\n\nCompiling the launcher executable...\n"
 	$(CC) $(EXEC_CFLAGS) $(EXEC_SOURCES) -o $(BINARYDIR)$(EXEC_BINARY)
-
 
 ###############################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
