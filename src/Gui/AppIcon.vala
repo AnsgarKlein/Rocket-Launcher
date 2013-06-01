@@ -114,7 +114,7 @@ class AppIcon : Gtk.Box {
 			button.set_label("no image");
 		}
 		
-		// ---> Setup Label1
+		// ---> Setup Label
 		string label1_str = app.get_name();
 		if (label1_str.char_count() > 17) {
 			label1_str = label1_str.slice(0, 14);
@@ -123,21 +123,6 @@ class AppIcon : Gtk.Box {
 		
 		Gtk.Label label1 = new Gtk.Label(label1_str);
 		this.pack_start(label1);
-		
-		// ---> Setup Label2
-		string label2_str = "";
-		if (app.get_generic() != null) {
-			label2_str = app.get_generic();
-			if (label2_str.char_count() > 15) {
-				label2_str = label2_str.slice(0, 12);
-				label2_str = label2_str +"...";
-			}
-			label2_str = "(" +label2_str +")";
-		}
-		
-		Gtk.Label label2 = new Gtk.Label(label2_str);
-		this.pack_start(label2);
-		
 
 		// ---> Setup Tooltip
 		string tooltip;
