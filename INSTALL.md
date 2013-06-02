@@ -70,7 +70,7 @@ Example:
 Usage
 -----
 
-Once you have installed Rocket-Launcher you can start it with the 'rocket-launcher' command, or with through the included .desktop file.
+Once you have installed Rocket-Launcher you can start it with the 'rocket-launcher' command or by using the included .desktop file.
 
 Always start *Rocket-Launcher* with the ``rocket-launcher`` command, not ``rocket-launcher-daemon``.
 ``rocket-launcher`` will check if another instance of *Rocket-Launcher* is running, and highlight it instead of starting another.
