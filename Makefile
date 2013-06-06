@@ -1,71 +1,71 @@
-CC		=	valac
-BINARYDIR	=	build/
+CC							=		valac
+BINARYDIR					=		build/
 
-MISCDIR		=	res/
-ICON		=	rocket-launcher
-DESKTOPFILE	=	rocket-launcher.desktop
+MISCDIR						=		res/
+ICON						=		rocket-launcher
+DESKTOPFILE					=		rocket-launcher.desktop
 
-ICONDIR				=	$(DESTDIR)/usr/share/icons/hicolor/
-ICONDIR_FALLBACK	=	$(DESTDIR)/usr/share/pixmaps/
-DESKTOPFILEDIR		=	$(DESTDIR)/usr/share/applications/
-INSTALLDIR			=	$(DESTDIR)/usr/bin/
-
-################################################################################
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-################################################################################
-
-DAEMON_PACKAGES	=	--pkg glib-2.0
-DAEMON_PACKAGES	+=	--pkg gio-2.0
-DAEMON_PACKAGES	+=	--pkg gtk+-3.0
-
-DAEMON_CFLAGS	+=	--thread
-DAEMON_CFLAGS	+=	--save-temps
-DAEMON_CFLAGS	+=	$(DAEMON_PACKAGES)
-DAEMON_CFLAGS	+=	-X -w
-
-DAEMON_SOURCES	+=	$(wildcard src/*.vala)
-DAEMON_SOURCES	+=	$(wildcard src/AppHandling/*.vala)
-DAEMON_SOURCES	+=	$(wildcard src/Gui/*.vala)
-DAEMON_SOURCES	+=	$(wildcard src/D-Bus-Server/*.vala)
-DAEMON_SOURCES_C	=	$(DAEMON_SOURCES:.vala=.c)
-
-DAEMON_BINARY	=	rocket-launcher-daemon
+ICONDIR						=		$(DESTDIR)/usr/share/icons/hicolor/
+ICONDIR_FALLBACK			=		$(DESTDIR)/usr/share/pixmaps/
+DESKTOPFILEDIR				=		$(DESTDIR)/usr/share/applications/
+INSTALLDIR					=		$(DESTDIR)/usr/bin/
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 ################################################################################
 
-EXEC_PACKAGES	=	--pkg glib-2.0
-EXEC_PACKAGES	+=	--pkg gio-2.0
+DAEMON_PACKAGES				=		--pkg glib-2.0
+DAEMON_PACKAGES				+=		--pkg gio-2.0
+DAEMON_PACKAGES				+=		--pkg gtk+-3.0
 
-EXEC_CFLAGS	+=	--thread
-EXEC_CFLAGS	+=	--save-temps
-EXEC_CFLAGS	+=	$(EXEC_PACKAGES)
-EXEC_CFLAGS	+=	-X -w
+DAEMON_CFLAGS				+=		--thread
+DAEMON_CFLAGS				+=		--save-temps
+DAEMON_CFLAGS				+=		-X -w
+DAEMON_CFLAGS				+=		$(DAEMON_PACKAGES)
 
-EXEC_SOURCES	=	$(wildcard src/D-Bus-Client/*.vala)
-EXEC_SOURCES_C	=	$(EXEC_SOURCES:.vala=.c)
+DAEMON_SOURCES				+=		$(wildcard src/*.vala)
+DAEMON_SOURCES				+=		$(wildcard src/AppHandling/*.vala)
+DAEMON_SOURCES				+=		$(wildcard src/Gui/*.vala)
+DAEMON_SOURCES				+=		$(wildcard src/D-Bus-Server/*.vala)
+DAEMON_SOURCES_C			=		$(DAEMON_SOURCES:.vala=.c)
 
-EXEC_BINARY	=	rocket-launcher
+DAEMON_BINARY				=		rocket-launcher-daemon
+
+################################################################################
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+################################################################################
+
+EXEC_PACKAGES				=		--pkg glib-2.0
+EXEC_PACKAGES				+=		--pkg gio-2.0
+
+EXEC_CFLAGS					+=		--thread
+EXEC_CFLAGS					+=		--save-temps
+EXEC_CFLAGS					+=		-X -w
+EXEC_CFLAGS					+=		$(EXEC_PACKAGES)
+
+EXEC_SOURCES				=		$(wildcard src/D-Bus-Client/*.vala)
+EXEC_SOURCES_C				=		$(EXEC_SOURCES:.vala=.c)
+
+EXEC_BINARY					=		rocket-launcher
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 ################################################################################
 
 ifdef DEBUG_BUILD
-    DAEMON_CFLAGS	+=	--debug
-    EXEC_CFLAGS		+=	--debug
+    DAEMON_CFLAGS			+=		--debug
+    EXEC_CFLAGS				+=		--debug
 else
     ifdef RELEASE_BUILD
-        DAEMON_CFLAGS	+=	-X -O3
-        EXEC_CFLAGS		+=	-X -O3
+        DAEMON_CFLAGS		+=		-X -O3
+        EXEC_CFLAGS			+=		-X -O3
     endif
 endif
 
 
 ifdef WITH_APPINDICATOR
-    DAEMON_PACKAGES	+=	--pkg appindicator3-0.1
-    DAEMON_CFLAGS	+=	-D WITH_APPINDICATOR
+    DAEMON_PACKAGES			+=		--pkg appindicator3-0.1
+    DAEMON_CFLAGS			+=		-D WITH_APPINDICATOR
 endif
 
 ################################################################################
