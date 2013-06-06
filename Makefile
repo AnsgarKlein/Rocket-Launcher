@@ -73,21 +73,21 @@ endif
 ################################################################################
 
 all: $(BINARYDIR)$(DAEMON_BINARY) $(BINARYDIR)$(EXEC_BINARY)
-	@echo sucessfully compiled
+	@echo -e sucessfully compiled
 
 clean:
 	rm -f $(BINARYDIR)$(DAEMON_BINARY)
 	rm -f $(BINARYDIR)$(EXEC_BINARY)
 	rm -f $(DAEMON_SOURCES_C)
 	rm -f $(EXEC_SOURCES_C)
-	@echo sucessfully cleaned
+	@echo -e sucessfully cleaned
 
 $(BINARYDIR)$(DAEMON_BINARY): $(DAEMON_SOURCES)
-	@echo "\n\nCompiling the daemon executable...\n"
+	@echo -e "\n\nCompiling the daemon executable...\n"
 	$(CC) $(DAEMON_CFLAGS) $(DAEMON_SOURCES) -o $(BINARYDIR)$(DAEMON_BINARY)
 
 $(BINARYDIR)$(EXEC_BINARY): $(EXEC_SOURCES)
-	@echo "\n\nCompiling the launcher executable...\n"
+	@echo -e "\n\nCompiling the launcher executable...\n"
 	$(CC) $(EXEC_CFLAGS) $(EXEC_SOURCES) -o $(BINARYDIR)$(EXEC_BINARY)
 
 $(ICONDIR):
@@ -141,7 +141,7 @@ install: all $(ICONDIR) $(ICONDIR_FALLBACK) $(DESKTOPFILEDIR) $(INSTALLDIR)
 	
 	cp $(MISCDIR)$(DESKTOPFILE) $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	update-icon-caches $(ICONDIR)
-	@echo sucessfully installed
+	@echo -e sucessfully installed
 
 uninstall:
 	rm --force /usr/bin/$(DAEMON_BINARY)
@@ -164,7 +164,7 @@ uninstall:
 	
 	rm --force $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	update-icon-caches $(ICONDIR)
-	@echo sucessfully uninstalled
+	@echo -e sucessfully uninstalled
 
 linecount:
 	wc --lines $(DAEMON_SOURCES) $(EXEC_SOURCES)
