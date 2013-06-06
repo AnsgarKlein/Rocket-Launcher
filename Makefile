@@ -140,7 +140,7 @@ install: all $(ICONDIR) $(ICONDIR_FALLBACK) $(DESKTOPFILEDIR) $(INSTALLDIR)
 	ln --symbolic --force $(ICONDIR)512x512/apps/$(ICON).png $(ICONDIR_FALLBACK)$(ICON).png
 	
 	cp $(MISCDIR)$(DESKTOPFILE) $(DESKTOPFILEDIR)$(DESKTOPFILE)
-	update-icon-caches $(ICONDIR)
+	touch $(ICONDIR)
 	@echo -e sucessfully installed
 
 uninstall:
@@ -163,7 +163,7 @@ uninstall:
 	rm --force /usr/share/pixmaps/$(ICON).png
 	
 	rm --force $(DESKTOPFILEDIR)$(DESKTOPFILE)
-	update-icon-caches $(ICONDIR)
+	touch $(ICONDIR)
 	@echo -e sucessfully uninstalled
 
 linecount:
