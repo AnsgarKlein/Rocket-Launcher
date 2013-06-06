@@ -2,12 +2,13 @@ CC		=	valac
 BINARYDIR	=	build/
 
 MISCDIR		=	res/
-
-ICONDIR		=	/usr/share/icons/hicolor/
 ICON		=	rocket-launcher
-
-DESKTOPFILEDIR	=	/usr/share/applications/
 DESKTOPFILE	=	rocket-launcher.desktop
+
+ICONDIR				=	$(DESTDIR)/usr/share/icons/hicolor/
+ICONDIR_FALLBACK	=	$(DESTDIR)/usr/share/pixmaps/
+DESKTOPFILEDIR		=	$(DESTDIR)/usr/share/applications/
+INSTALLDIR			=	$(DESTDIR)/usr/bin/
 
 ################################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
@@ -89,13 +90,25 @@ $(BINARYDIR)$(EXEC_BINARY): $(EXEC_SOURCES)
 	@echo "\n\nCompiling the launcher executable...\n"
 	$(CC) $(EXEC_CFLAGS) $(EXEC_SOURCES) -o $(BINARYDIR)$(EXEC_BINARY)
 
+$(ICONDIR):
+	mkdir --parents $(ICONDIR)
+
+$(ICONDIR_FALLBACK):
+	mkdir --parents $(ICONDIR_FALLBACK)
+
+$(DESKTOPFILEDIR):
+	mkdir --parents $(DESKTOPFILEDIR)
+
+$(INSTALLDIR):
+	mkdir --parents $(INSTALLDIR)
+
 ###############################################################################
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 ###############################################################################
 
-install: all
-	cp $(BINARYDIR)$(DAEMON_BINARY) /usr/bin/$(DAEMON_BINARY)
-	cp $(BINARYDIR)$(EXEC_BINARY) /usr/bin/$(EXEC_BINARY)
+install: all $(ICONDIR) $(ICONDIR_FALLBACK) $(DESKTOPFILEDIR) $(INSTALLDIR)
+	cp $(BINARYDIR)$(DAEMON_BINARY) $(INSTALLDIR)$(DAEMON_BINARY)
+	cp $(BINARYDIR)$(EXEC_BINARY) $(INSTALLDIR)$(EXEC_BINARY)
 	
 	mkdir --parents $(ICONDIR)16x16/apps/
 	mkdir --parents $(ICONDIR)22x22/apps/
@@ -124,7 +137,7 @@ install: all
 	cp $(MISCDIR)$(ICON)_192x192.png $(ICONDIR)192x192/apps/$(ICON).png
 	cp $(MISCDIR)$(ICON)_256x256.png $(ICONDIR)256x256/apps/$(ICON).png
 	cp $(MISCDIR)$(ICON)_512x512.png $(ICONDIR)512x512/apps/$(ICON).png
-	ln --symbolic --force $(ICONDIR)512x512/apps/$(ICON).png /usr/share/pixmaps/$(ICON).png
+	ln --symbolic --force $(ICONDIR)512x512/apps/$(ICON).png $(ICONDIR_FALLBACK)$(ICON).png
 	
 	cp $(MISCDIR)$(DESKTOPFILE) $(DESKTOPFILEDIR)$(DESKTOPFILE)
 	update-icon-caches $(ICONDIR)
