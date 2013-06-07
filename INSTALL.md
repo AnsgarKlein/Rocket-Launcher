@@ -7,6 +7,7 @@ Gtk3
 To install Rockt-Launcher you will need to have Gtk3 and its Vala (gir) bindings installed.
 
 On Ubuntu (12.04) these packages are called:
+
 * ``gir1.2-gtk-3.0``
 * ``libgtk-3-dev``
 
@@ -20,6 +21,7 @@ If you don't use Ubuntu's Unity Desktop Environment you propably don't want to u
 If you want to use *libappindicator* you will need the libappindicator library and its Vala (gir) bindings.
 
 On Ubuntu (12.04) theses packages are called:
+
 * ``libappindicator3-1``
 * ``libappindicator3-dev``
 * ``gir1.2-appindicator3-0.1``
@@ -34,6 +36,7 @@ Since *Rocket-Launcher* is written in Vala you also need the Vala compiler (vala
 You will need at least version 0.16 to compile successfully.
 
 On Ubuntu (12.04) theses packages are called:
+
 * ``valac-0.16``
 * ``valac-0.16-vapi``
 * ``libvala-0.16-0``
