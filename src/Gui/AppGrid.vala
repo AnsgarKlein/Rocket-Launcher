@@ -39,15 +39,7 @@ class AppGrid : Gtk.Grid {
 	}
 	
 	private int get_number_of_children() {
-		int num = 0;
-		foreach (Gtk.Widget wdg in base.get_children()) {
-			num++;
-		}
-		return num;
-		
-		//TODO: Test the following (->speed)
-		//different approach:
-		//int num = (int)base.get_children().length();
+		return (int)base.get_children().length();
 	}
 	
 	public new void add(AppIcon app) {
