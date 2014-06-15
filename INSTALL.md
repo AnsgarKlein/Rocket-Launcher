@@ -1,8 +1,8 @@
 Installation Instructions
 =========================
 
-Gtk3
-----
+GTK+ 3
+------
 
 To install Rockt-Launcher you will need to have GTK+ 3 and its Vala
 bindings installed.
