@@ -167,7 +167,7 @@ namespace RocketLauncher {
             string icon_path = null;
             bool found_icon = icons.lookup_extended(name, null, out icon_path);
             
-            if (!found_icon) {
+            if (found_icon) {
                 return icon_path;
             }
             
