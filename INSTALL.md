@@ -97,9 +97,9 @@ You will also have to set the *RCKTL_FEATURE_APPINDICATOR* environment
 variable to use *appindicator*.  
 Example:
 
-``$ export DEBUG_BUILD=``  
-``$ export RELEASE_BUILD=1``  
-``$ export WITH_APPINDICATOR=``  
+``$ export RCKTL_BUILD_DEBUG=``  
+``$ export RCKTL_BUILD_RELEASE=1``  
+``$ export RCKTL_FEATURE_APPINDICATOR=``  
 ``$ make``  
 ``$ make install``  
 
