@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH="/usr/lib/rocket-launcher":LD_LIBRARY_PATH
+exec /usr/lib/rocket-launcher/rocket-launcher "$@"

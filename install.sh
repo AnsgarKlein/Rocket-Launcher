@@ -10,15 +10,15 @@ if [ -z $BUILD_TYPE ]; then
 fi
 
 if [ $BUILD_TYPE = "1" ]; then
-	echo -e "\texport RELEASE_BUILD="
-	echo -e "\texport DEBUG_BUILD=1"
-	export RELEASE_BUILD=
-	export DEBUG_BUILD=1
+	echo -e "\texport RCKTL_BUILD_RELEASE="
+	echo -e "\texport RCKTL_BUILD_DEBUG=1"
+	export RCKTL_BUILD_RELEASE=
+	export RCKTL_BUILD_DEBUG=1
 else
-	echo -e "\texport DEBUG_BUILD="
-	echo -e "\texport RELEASE_BUILD=1"
-	export DEBUG_BUILD=
-	export RELEASE_BUILD=1
+	echo -e "\texport RCKTL_BUILD_DEBUG="
+	echo -e "\texport RCKTL_BUILD_RELEASE=1"
+	export RCKTL_BUILD_DEBUG=
+	export RCKTL_BUILD_RELEASE=1
 fi
 
 
@@ -35,14 +35,14 @@ if [ -z $NOTIFICATION_AREA ]; then
 fi
 
 if [ $NOTIFICATION_AREA = "1" ]; then
-	echo -e "\texport WITH_APPINDICATOR=1"
-	export WITH_APPINDICATOR=1
+	echo -e "\texport RCKTL_FEATURE_APPINDICATOR=1"
+	export RCKTL_FEATURE_APPINDICATOR=1
 else
-	echo -e "\texport WITH_APPINDICATOR="
-	export WITH_APPINDICATOR=
+	echo -e "\texport RCKTL_FEATURE_APPINDICATOR="
+	export RCKTL_FEATURE_APPINDICATOR=
 fi
 
 
 
 
-make
+make $@

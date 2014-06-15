@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Rocket-Launcher
-GenericName=Application starter
-Comment=Fast lightweight application starter
-Exec=rocket-launcher
-Icon=rocket-launcher
-Terminal=false
-Type=Application
-Categories=Utility;
