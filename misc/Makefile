@@ -48,6 +48,8 @@ install:
 	install -D $(ICON_NAME)_192x192.png $(RCKTL_INSTALL_ICON_DIR)/192x192/apps/$(ICON_NAME).png
 	install -D $(ICON_NAME)_256x256.png $(RCKTL_INSTALL_ICON_DIR)/256x256/apps/$(ICON_NAME).png
 	install -D $(ICON_NAME)_512x512.png $(RCKTL_INSTALL_ICON_DIR)/512x512/apps/$(ICON_NAME).png
+	
+	-update-icon-caches $(RCKTL_INSTALL_ICON_DIR)
 
 uninstall:
 	rm -f "$(RCKTL_INSTALL_BIN_DIR)/$(RUN_SCRIPT)"
