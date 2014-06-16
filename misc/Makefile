@@ -70,7 +70,8 @@ uninstall:
 	rm -f "$(DESTDIR)$(RCKTL_INSTALL_ICON_DIR)/256x256/apps/$(ICON_NAME).png"
 	rm -f "$(DESTDIR)$(RCKTL_INSTALL_ICON_DIR)/512x512/apps/$(ICON_NAME).png"
 	
-	-update-icon-caches $(RCKTL_INSTALL_ICON_DIR)
+	-update-icon-caches "$(RCKTL_INSTALL_ICON_DIR)"
+	-gtk-update-icon-cache "$(RCKTL_INSTALL_ICON_DIR)"
 
 $(RCKTL_DIR)/$(PORTABLE_SCRIPT): $(PORTABLE_SCRIPT)
 	@echo "  CP      $(notdir $@)"
