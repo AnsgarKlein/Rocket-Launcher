@@ -82,10 +82,10 @@ clean:
 	rm -f "$(RCKTL_DIR)/$(SHARED_LIBRARY)"
 
 install:
-	install -D "$(RCKTL_DIR)/$(SHARED_LIBRARY)" "$(RCKTL_INSTALL_LIB_DIR)/$(SHARED_LIBRARY)"
+	install -D "$(RCKTL_DIR)/$(SHARED_LIBRARY)" "$(DESTDIR)$(RCKTL_INSTALL_LIB_DIR)/$(SHARED_LIBRARY)"
 
 uninstall:
-	rm -f "$(RCKTL_INSTALL_LIB_DIR)/$(SHARED_LIBRARY)"	
+	rm -f "$(DESTDIR)$(RCKTL_INSTALL_LIB_DIR)/$(SHARED_LIBRARY)"
 
 
 %.vapi: %.vala

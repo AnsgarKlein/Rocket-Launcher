@@ -39,7 +39,7 @@ uninstall:
 	@$(MAKE) uninstall -C "$(LIB_DIR)"
 	@$(MAKE) uninstall -C "$(MISC_DIR)"
 	
-	-rmdir $(RCKTL_INSTALL_LIB_DIR)
+	-rmdir "$(DESTDIR)$(RCKTL_INSTALL_LIB_DIR)"
 
 
 $(BUILD_DIR):

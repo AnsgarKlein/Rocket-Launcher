@@ -94,10 +94,12 @@ If you use Ubuntu Unity (the default Ubuntu Desktop Environment, not something
 like *XFCE*/*KDE*/*LXDE*) you will need the *appindicator* library in order
 to display an icon in the message area.  
 You will also have to set the *RCKTL_FEATURE_APPINDICATOR* environment
-variable to use *appindicator*.
+variable to use *appindicator*.  
 *Rocket-Launcher* also supports threaded builds. You can tell make to build
 with multiple threads with *-j* tag.
-(Or set it in *MAKEFLAGS* environment variable)
+(Or set it in *MAKEFLAGS* environment variable)  
+Make supports setting the *DESTDIR* environment variable to specify a
+(absolut) path that gets prepended to every installed file.
 
 Example:
 

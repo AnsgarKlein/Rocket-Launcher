@@ -80,10 +80,10 @@ clean:
 	rm -f "$(RCKTL_DIR)/$(BINARY)"
 
 install:
-	install -D "$(RCKTL_DIR)/$(BINARY)" "$(RCKTL_INSTALL_LIB_DIR)/$(BINARY)"
+	install -D "$(RCKTL_DIR)/$(BINARY)" "$(DESTDIR)$(RCKTL_INSTALL_LIB_DIR)/$(BINARY)"
 
 uninstall:
-	rm -f "$(RCKTL_INSTALL_LIB_DIR)/$(BINARY)"
+	rm -f "$(DESTDIR)$(RCKTL_INSTALL_LIB_DIR)/$(BINARY)"
 
 
 %.vapi: %.vala
