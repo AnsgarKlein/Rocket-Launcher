@@ -9,6 +9,8 @@ GEN_PACKAGES			+=		--pkg x11
 
 GEN_FLAGS				:=		$(GEN_PACKAGES)
 GEN_FLAGS				+=		--ccode
+GEN_FLAGS				+=		--header="$(RCKTL_DIR)/$(HEADER_FILE)"
+GEN_FLAGS				+=		--vapi="$(RCKTL_DIR)/$(VAPI_FILE)"
 
 CC_PACKAGES				:=		`pkg-config --cflags gobject-2.0`
 CC_PACKAGES				+=		`pkg-config --cflags glib-2.0`
@@ -25,12 +27,6 @@ LD_FLAGS				+=		`pkg-config --libs gobject-2.0`
 LD_FLAGS				+=		`pkg-config --libs glib-2.0`
 LD_FLAGS				+=		`pkg-config --libs gio-2.0`
 LD_FLAGS				+=		`pkg-config --libs x11`
-
-VALAC_FLAGS				:=		$(GEN_PACKAGES)
-VALAC_FLAGS				+=		--library=""
-VALAC_FLAGS				+=		--header="$(RCKTL_DIR)/$(HEADER_FILE)"
-VALAC_FLAGS				+=		--vapi="$(RCKTL_DIR)/$(VAPI_FILE)"
-VALAC_FLAGS				+=		$(addprefix -X , $(CC_FLAGS))
 
 SOURCES					:=		ApplicationHandler.vala
 SOURCES					+=		App.vala
@@ -93,6 +89,8 @@ uninstall:
 	@valac --fast-vapi="$@" $<
 
 MISSINGVAPIFILES=$(subst $(subst .c,.vapi,$@),,$(VAPIFILES))
+$(RCKTL_DIR)/$(HEADER_FILE):
+$(RCKTL_DIR)/$(VAPI_FILE):
 %.c: $(MISSINGVAPIFILES) %.vala
 	@echo "  GEN     $(notdir $@)"
 	@valac $(GEN_FLAGS) $(addprefix --use-fast-vapi=,$(MISSINGVAPIFILES)) "$(subst .c,.vala,$@)"
@@ -104,11 +102,4 @@ MISSINGVAPIFILES=$(subst $(subst .c,.vapi,$@),,$(VAPIFILES))
 $(RCKTL_DIR)/$(SHARED_LIBRARY): $(OBJECTS)
 	@echo "  LD      $(notdir $@)"
 	@$(CC) $(OBJECTS) $(LD_FLAGS) -o "$(RCKTL_DIR)/$(SHARED_LIBRARY)"
-
-$(RCKTL_DIR)/$(HEADER_FILE):
-$(RCKTL_DIR)/$(VAPI_FILE): $(VAPIFILES)
-	@echo "  GEN     $(HEADER_FILE) (Compiling whole library again)"
-	@echo "  GEN     $(VAPI_FILE) (Compiling whole library again)"
-	@valac $(VALAC_FLAGS) $(SOURCES) -o deletethis.out
-	@rm -f deletethis.out
 
