@@ -3,30 +3,25 @@ SHARED_LIBRARY			:=		librocketlauncher.so
 VAPI_FILE				:=		rocketlauncher-$(LIB_VERSION).vapi
 HEADER_FILE				:=		rocketlauncher-$(LIB_VERSION).h
 
-GEN_PACKAGES			:=		--pkg glib-2.0 --target-glib=2.32
-GEN_PACKAGES			+=		--pkg gio-2.0
-GEN_PACKAGES			+=		--pkg x11
+PACKAGES				:=		gobject-2.0
+PACKAGES				+=		glib-2.0
+PACKAGES				+=		gio-2.0
+PACKAGES				+=		x11
 
-GEN_FLAGS				:=		$(GEN_PACKAGES)
+GEN_FLAGS				:=		$(addprefix --pkg ,$(PACKAGES))
+GEN_FLAGS				+=		--target-glib=2.32
 GEN_FLAGS				+=		--ccode
 GEN_FLAGS				+=		--header="$(RCKTL_DIR)/$(HEADER_FILE)"
 GEN_FLAGS				+=		--vapi="$(RCKTL_DIR)/$(VAPI_FILE)"
 
-CC_PACKAGES				:=		`pkg-config --cflags gobject-2.0`
-CC_PACKAGES				+=		`pkg-config --cflags glib-2.0`
-CC_PACKAGES				+=		`pkg-config --cflags gio-2.0`
-CC_PACKAGES				+=		`pkg-config --cflags x11`
-
 CC_FLAGS				:=		-w
 CC_FLAGS				+=		-fPIC
 CC_FLAGS				+=		-shared
+CC_FLAGS				+=		$(shell pkg-config --cflags $(PACKAGES))
 
 LD_FLAGS				:=		-fPIC
 LD_FLAGS				+=		-shared
-LD_FLAGS				+=		`pkg-config --libs gobject-2.0`
-LD_FLAGS				+=		`pkg-config --libs glib-2.0`
-LD_FLAGS				+=		`pkg-config --libs gio-2.0`
-LD_FLAGS				+=		`pkg-config --libs x11`
+LD_FLAGS				+=		$(shell pkg-config --libs $(PACKAGES))
 
 SOURCES					:=		ApplicationHandler.vala
 SOURCES					+=		App.vala
@@ -97,7 +92,7 @@ $(RCKTL_DIR)/$(VAPI_FILE):
 
 %.o: %.c
 	@echo "  CC      $(notdir $@)"
-	@$(CC) $(CC_FLAGS) $(CC_PACKAGES) -c $<
+	@$(CC) $(CC_FLAGS) -c $<
 
 $(RCKTL_DIR)/$(SHARED_LIBRARY): $(OBJECTS)
 	@echo "  LD      $(notdir $@)"

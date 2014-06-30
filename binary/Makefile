@@ -4,26 +4,23 @@ VAPI_FILE				:=		rocketlauncher-$(LIB_VERSION).vapi
 HEADER_FILE				:=		rocketlauncher-$(LIB_VERSION).h
 BINARY					:=		rocket-launcher
 
-GEN_FLAGS				:=		--pkg glib-2.0 --target-glib=2.32
-GEN_FLAGS				+=		--pkg gio-2.0
-GEN_FLAGS				+=		--pkg x11
-GEN_FLAGS				+=		--pkg gtk+-3.0
+PACKAGES				:=		gobject-2.0
+PACKAGES				+=		glib-2.0
+PACKAGES				+=		gio-2.0
+PACKAGES				+=		x11
+PACKAGES				+=		gtk+-3.0
+
+GEN_FLAGS				:=		$(addprefix --pkg ,$(PACKAGES))
 GEN_FLAGS				+=		--ccode
 GEN_FLAGS				+=		"$(RCKTL_DIR)/$(VAPI_FILE)"
 
 CC_FLAGS				:=		-w
 CC_FLAGS				+=		-I"$(RCKTL_DIR)"
-CC_FLAGS				+=		`pkg-config --cflags gobject-2.0`
-CC_FLAGS				+=		`pkg-config --cflags glib-2.0`
-CC_FLAGS				+=		`pkg-config --cflags gio-2.0`
-CC_FLAGS				+=		`pkg-config --cflags gtk+-3.0`
+CC_FLAGS				+=		$(shell pkg-config --cflags $(PACKAGES))
 
 LD_FLAGS				:=		-L"$(RCKTL_DIR)"
 LD_FLAGS				+=		-lrocketlauncher
-LD_FLAGS				+=		`pkg-config --libs gobject-2.0`
-LD_FLAGS				+=		`pkg-config --libs glib-2.0`
-LD_FLAGS				+=		`pkg-config --libs gio-2.0`
-LD_FLAGS				+=		`pkg-config --libs gtk+-3.0`
+LD_FLAGS				+=		$(shell pkg-config --libs $(PACKAGES))
 
 SOURCES					:=		AppGrid.vala
 SOURCES					+=		AppIcon.vala
