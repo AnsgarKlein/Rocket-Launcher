@@ -17,6 +17,7 @@
 namespace RocketLauncher {
     class MainWindow : Gtk.Window {
         private AppGrid app_grid;
+        private CategoryButton[] category_buttons;
         private Gtk.ScrolledWindow scrolled;
         private Gtk.Entry search_entry;
         
@@ -153,11 +154,17 @@ namespace RocketLauncher {
                 application_handler.filter_string(search_entry.get_text());
             } );
             search_entry.changed.connect( () => {
-                string text;
-                if ((text = search_entry.get_text()) == "") {
+                // Deactivate all category buttons
+                foreach (CategoryButton ctbtn in category_buttons) {
+                    ctbtn.set_active(false);
+                }
+                
+                // Filter applications
+                string text = search_entry.get_text();
+                if (text == "") {
                     application_handler.filter_all();
                 } else {
-                    application_handler.filter_string(search_entry.get_text());
+                    application_handler.filter_string(text);
                 }
             } );
             outer_grid.attach(search_entry, 1, 0, 1, 1);
@@ -168,18 +175,28 @@ namespace RocketLauncher {
             button_box.set_vexpand(true);
             outer_grid.attach(button_box, 1, 1, 1, 1);
             
-            for (int i = 0; i < 14; i++) {
+            category_buttons = new CategoryButton[Constants.category_button_count];
+            for (int i = 0; i < Constants.category_button_count; i++) {
                 CategoryButton category_button;
                 category_button = new CategoryButton(Constants.category_button_names[i],
                                                      Constants.category_button_values[i]);
                 
                 category_button.set_relief(Gtk.ReliefStyle.NONE);
                 category_button.category_button_press_event.connect( (category) => {
+                    // Reset entry text
                     search_entry.set_text("");
+                    
+                    // Deactivate all other category buttons
+                    foreach (CategoryButton ctbtn in category_buttons) {
+                        ctbtn.set_active(false);
+                    }
+                    
+                    // Filter applications
                     application_handler.filter_categorie(category);
                 } );
                 
                 button_box.add(category_button);
+                category_buttons[i] = category_button;
             }
             
             

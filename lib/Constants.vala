@@ -46,5 +46,7 @@ namespace RocketLauncher {
                                                  "System",
                                                  "Utility" };
         
+        public static const uint category_button_count = 14;
+        
     }
 }

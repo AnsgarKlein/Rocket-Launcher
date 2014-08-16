@@ -15,7 +15,7 @@
 
 
 namespace RocketLauncher {
-    private class CategoryButton : Gtk.Button {
+    private class CategoryButton : Gtk.ToggleButton {
         private string filter_value;
         
         public CategoryButton(string label, string filter_value) {
