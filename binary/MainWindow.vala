@@ -115,7 +115,10 @@ namespace RocketLauncher {
             base.set_position(Gtk.WindowPosition.CENTER);
             base.set_decorated(false);
             base.set_keep_above(true);
+            base.stick();
             base.set_deletable(false);
+            base.set_skip_taskbar_hint(true);
+            base.set_has_resize_grip(false);
             base.set_default_size(750, 600);
             base.set_border_width(border_size);
             
